@@ -1,0 +1,40 @@
+Meta: Poder mostrar el histograma de una serie de datos.
+
+Nota de Andres para mi babe(osea el alexis :v)
+
+Se tiene una tabla de este tipo
+
+    Intervalos de clase       frecuencias          i
+        0 - 3                      5               0
+        4 - 7                      6               1
+
+Datos: Estos se van a jalar de un archivo asi bien mamalón.
+
+Calculos:
+    
+    3.1 double rango(double max, double min) empezar
+        regresar max - min;
+    terminar
+
+    3.2 double criterioSturges(int n) empezar
+        regresar 1 + 3.322 * Log(n);
+    terminar
+
+    3.2 double[][] intevalosClase(double max, double min, int n) empezar 
+        amplitud = rango(max, min) / criterioSturges(n);
+        limite = n / amplitud;
+        Mientras i = 0; i < limite; i ++ empezar
+            clase[i][0] = min;
+            clase[i][1] = min + amplitud;
+            min = clase[i][1] + 1;
+        terminar
+    terminar
+
+    3.3 int[] frecuenciasClase(Double[] datos) empezar
+        Mientras i = 0; i < lista.lenght; i++ empezar
+            Mientras cada double d en datos empezar
+                Si d <= lista[i][0] && d >= lista[i][0]
+                    f++;
+            terminar
+        frecuencia[i] = f;
+    terminar
