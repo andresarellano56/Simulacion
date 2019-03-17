@@ -1,6 +1,6 @@
-package Calculos;
+package ADT;
 
-public class ADTHistograma {
+public class Histograma {
     int[][] intervaloClase;
     int[] limInf, frecuencia;
     
@@ -8,25 +8,21 @@ public class ADTHistograma {
         return max - min;
     }
     
-    public int criterioSturges(double n){
-        return (int)(1 + 3.322 * Math.log10(n));
+    public int criterioSturges(int n){
+        return Math.round((float)(1 + 3.322 * Math.log10(n)));
     }
     
     public int amplitudClase(int max, int min, int n){
-        return (int) (rango(max, min) / criterioSturges(n));
+        return Math.round((float)(rango(max, min) / criterioSturges(n)));
     }
-    
-    public int numeroClases(int max, int min, int n){
-        return (int) (n / amplitudClase(max, min, n));
-    }
-
+   
     public int[][] intervalosClase(int[] datos){
         int amp, nc, max, min, n;
         
         max = datoMax(datos);
         min = datoMin(datos);
         n = datos.length;
-        nc = numeroClases(max, min, n);
+        nc = criterioSturges(n);
         amp = amplitudClase(max, min, n);
         intervaloClase = new int[nc][2];
         for (int i = 0; i < nc; i++) {
@@ -43,8 +39,9 @@ public class ADTHistograma {
         frecuencia = new int[intervaloClase.length];
         for (int i = 0; i < intervaloClase.length; i++) {
             for(double d: datos)
-                if(d <= intervaloClase[i][0] && d >= intervaloClase[i][0]) f++;
+                if(d >= intervaloClase[i][0] && d <= intervaloClase[i][1]) f++;
             frecuencia[i] = f;
+            f = 0;
         }
         return frecuencia;
     }

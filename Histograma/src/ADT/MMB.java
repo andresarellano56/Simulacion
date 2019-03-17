@@ -1,4 +1,4 @@
-package Calculos;
+package ADT;
 
 import java.util.Scanner;
 
@@ -6,9 +6,9 @@ public class MMB {
     int n, h, a, m, n0, b;
     final int c = 0;
 
-    public static void main(String[] args) {
-        new MMB().run();
-    }
+//    public static void main(String[] args) {
+//        new MMB().run();
+//    }
 
     int calculaB(int n) {
         double log = 2 + ((Math.log(n) / Math.log(2)) + (1 - Math.pow(10, -6)));
