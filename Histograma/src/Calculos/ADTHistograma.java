@@ -20,9 +20,12 @@ public class ADTHistograma {
         return (int) (n / amplitudClase(max, min, n));
     }
 
-    public int[][] intervalosClase(int max, int min, int n){
-        int amp, nc;
-      
+    public int[][] intervalosClase(int[] datos){
+        int amp, nc, max, min, n;
+        
+        max = datoMax(datos);
+        min = datoMin(datos);
+        n = datos.length;
         nc = numeroClases(max, min, n);
         amp = amplitudClase(max, min, n);
         intervaloClase = new int[nc][2];
@@ -37,11 +40,28 @@ public class ADTHistograma {
     public int[] frecuenciasClase(int[] datos){
         int f = 0; 
         
+        frecuencia = new int[intervaloClase.length];
         for (int i = 0; i < intervaloClase.length; i++) {
             for(double d: datos)
                 if(d <= intervaloClase[i][0] && d >= intervaloClase[i][0]) f++;
             frecuencia[i] = f;
         }
         return frecuencia;
+    }
+    
+    public int datoMax(int[] datos){
+        int aux = datos[0];
+        
+        for (int i = 0; i < datos.length; i++) 
+           if(datos[i] > aux) aux = datos[i];
+        return aux;
+    }
+    
+    public int datoMin(int[] datos){
+        int aux = datos[0];
+        
+        for (int i = 0; i < datos.length; i++) 
+           if(datos[i] < aux) aux = datos[i];
+        return aux;
     }
 }
