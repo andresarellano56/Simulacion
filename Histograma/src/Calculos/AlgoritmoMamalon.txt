@@ -12,29 +12,39 @@ Datos: Estos se van a jalar de un archivo asi bien mamalón.
 
 Calculos:
     
-    3.1 double rango(double max, double min) empezar
+    3.1 int rango(double max, double min) empezar
         regresar max - min;
     terminar
 
-    3.2 double criterioSturges(int n) empezar
+    3.2 int criterioSturges(int n) empezar
         regresar 1 + 3.322 * Log(n);
     terminar
 
-    3.2 double[][] intevalosClase(double max, double min, int n) empezar 
-        amplitud = rango(max, min) / criterioSturges(n);
-        limite = n / amplitud;
-        Mientras i = 0; i < limite; i ++ empezar
-            clase[i][0] = min;
-            clase[i][1] = min + amplitud;
-            min = clase[i][1] + 1;
-        terminar
+    3.3 int amplitudClase(int max, int min, int n) empezar
+        return rango(max, min) / criterioSturges(n);
     terminar
 
-    3.3 int[] frecuenciasClase(Double[] datos) empezar
+    3.4 int numeroClases(int max, int min, int n) empezar
+        regresar n / amplitudClase(max, min, n;
+    terminar
+
+    3.5 int[][] intevalosClase(int max, int min, int n) empezar 
+        nc = numeroClases(max, min, n);
+        amp = amplitudClase(max, min, n);
+        Mientras i = 0; i < nc; i ++ empezar
+            intervaloClase[i][0] = min;
+            intervaloClase[i][1] = min + amplitud;
+            min = intervaloClase[i][1] + 1;
+        terminar
+        regresar intervaloClase;
+    terminar
+
+    3.4 int[] frecuenciasClase(int[] datos) empezar
         Mientras i = 0; i < lista.lenght; i++ empezar
             Mientras cada double d en datos empezar
-                Si d <= lista[i][0] && d >= lista[i][0]
-                    f++;
+                Si d <= lista[i][0] && d >= lista[i][0] entonces f++;
             terminar
-        frecuencia[i] = f;
+            frecuencia[i] = f;
+        terminar
+        regresar frecuencia;
     terminar
