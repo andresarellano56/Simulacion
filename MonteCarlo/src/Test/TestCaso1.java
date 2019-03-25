@@ -10,7 +10,8 @@ import Casos.Caso1;
 public class TestCaso1 {
 
     public static void main(String[] args) {
-        double x = new Caso1().calcularTheta(-2, 2, 300000, 3);
+        double y = new Caso1().calcularTheta(0, 1, 3000000, 6);
+        double x = y * new Caso1().calcularTheta(0, 1, 3000000, 6);
         System.out.println(x);
     }
     
