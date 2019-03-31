@@ -21,11 +21,8 @@ public class GAP {
         int[] unicos = digitosUnicos(muestra);
 
         for (int i = 0; i < unicos.length; i++) {
-            for (int j = 0; j < muestra.length; j++) {
-                if (unicos[i] == muestra[j]) {
-                    c++;
-                }
-            }
+            for (int j = 0; j < muestra.length; j++) 
+                if (unicos[i] == muestra[j]) c++;
             res = res + (c - 1);
             c = 0;
         }
@@ -57,34 +54,86 @@ public class GAP {
         int c;
 
         for (int i : oc) i = 0;
-    
         for (int i = 0; i < unico.length; i++) {
             for (int j = 0; j < muestra.length; j++) {
                 c = 0;
                 if (unico[i] == muestra[j]) {
-                    System.out.println("empieza: " + j);
                     do{
-                       System.out.println(unico[i] + " " + muestra[j] + " " + c);
                        j++;
                        c++;
-                       if(j == muestra.length) break;
-                       else if(j >= muestra.length - 1) c = -1;
+                       if(j == muestra.length){ 
+                           c = -1; 
+                           break; 
+                       }
                     }while(unico[i] != muestra[j]);
-                    System.out.println("termina " + j);
-                    j--;
+                    j--; 
                     c--;
-                    if(c > 0){
-                        for (int k = 0; k < intervalo.length; k++) {
-                            if(c >= intervalo[k][0] && c <= intervalo[k][1]) {
-                                System.out.println("se guardo en: " + intervalo[k][0] + " - " + intervalo[k][1] + " - " + c );
+                    if(c >= 0)
+                        for (int k = 0; k < intervalo.length; k++) 
+                            if(c >= intervalo[k][0] && c <= intervalo[k][1]) 
                                 oc[k]++;
-                            }
-                        }
-                    }
                 }
             }
         }
         return oc;
+    }
+    
+    public double singleRA(int oc, int n){
+        return ((double) oc / n);
+    }
+    
+    public double singleFAR(int n){
+        return ((double) 1 - Math.pow(0.9, n + 1));
+    }
+    
+    public double[] frecuenciaAcumulada(int[] oc, int n){
+        double[] fe = new double[oc.length];
+        
+        for (int i = 0; i < oc.length; i++) 
+            fe[i] = singleRA(oc[i], n);
+        
+        return fe;
+    }
+    
+    public double[] frecuenciaAcumuladaR(int[][] intM){
+        double[] fo = new double[intM.length];
+        
+        for (int i = 0; i < intM.length; i++) 
+            fo[i] = singleFAR(intM[i][1]);
+        
+        return fo;
+    }
+    
+    public double[] diferenciaFrecuencias(int[] fe, int[] fo){
+        double[] dif = new double[fe.length];
+        
+        for (int i = 0; i < fe.length; i++) 
+            dif[i] = fe[i] - fo[i];
+        
+        return dif;
+    }
+    
+    public double difenciaMAX(int[] fe, int[] fo){
+        double[] dif = diferenciaFrecuencias(fe, fo);
+        
+        for (int i = 0; i < dif.length; i++) {
+            for (int j = 0; j < dif.length; j++) {
+                if(dif[i] < dif[j]){
+                    double aux = dif[j];
+                    dif[j] = dif[i];
+                    dif[i] = aux;
+                }
+            }
+        }
+        return dif[0];
+    }
+    
+    public boolean pasaPrueba(double dMax, double dKol){
+        return dMax < dKol;
+    }
+
+    public double resKolmogorov(int nHuecos){
+        return ((double) 1.36 / Math.sqrt(nHuecos));
     }
 
     public int longitudHuecos(int n) {
@@ -94,15 +143,14 @@ public class GAP {
     public int[] ordenarMuestra(int[] m) {
         int[] muestra = new int[m.length];
         System.arraycopy(m, 0, muestra, 0, m.length);
-        for (int i = 0; i < muestra.length; i++) {
-            for (int j = 0; j < muestra.length; j++) {
+        for (int i = 0; i < muestra.length; i++) 
+            for (int j = 0; j < muestra.length; j++) 
                 if (muestra[i] < muestra[j]) {
                     int aux = muestra[j];
                     muestra[j] = muestra[i];
                     muestra[i] = aux;
                 }
-            }
-        }
+   
         return muestra;
     }
 
@@ -122,9 +170,8 @@ public class GAP {
     public int[] convertirArray(ArrayList<Integer> al) {
         int[] k = new int[al.size()];
 
-        for (int i = 0; i < k.length; i++) {
-            k[i] = al.get(i);
-        }
+        for (int i = 0; i < k.length; i++) k[i] = al.get(i);
+        
         return k;
     }
 }
