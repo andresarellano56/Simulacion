@@ -20,8 +20,9 @@ public class TestHuecos {
                 break;
             }
         }*/
-        
-        new GAP().ocurrencia(x, x.length);
+
+        int[] o = new GAP().ocurrencia(x,x.length);
+        for(int m: o) System.out.println(m);
     }
     
     
