@@ -18,11 +18,11 @@ public class GAP {
     public double[] fo;
     public double[] diferencia;
     
-    public int numeroHuecos(int n) {
+    private int numeroHuecos(int n) {
         return n - 10;
     }
 
-    public int numeroHuecos(int[] muestra) {
+    private int numeroHuecos(int[] muestra) {
         int res = 0, c = 0;
         int[] unicos = digitosUnicos(muestra);
 
@@ -37,7 +37,7 @@ public class GAP {
     }
 
     //Modificar
-    public void intervalosOcurrencia() {
+    private void intervalosOcurrencia() {
         int lh = longitudHuecos(huecoMayor())+1;
         int c = 0;
         intervalos = new int[lh][2];
@@ -53,7 +53,7 @@ public class GAP {
         }
     }
 
-    public void ocurrencia(int[] muestra, int n) {
+    private void ocurrencia(int[] muestra, int n) {
         int[] unico = digitosUnicos(muestra);
         nHuecos = new int[muestra.length];
         int c, r = 0;
@@ -75,22 +75,23 @@ public class GAP {
                     c--;
                     nHuecos[r] = c;
                     r++;
-                    
                 }
             }
         }
     }
     
-    public void frecuencias(){
+    private void frecuencias(){
         frecuencia = new int[intervalos.length];
+        int suma=0;
         
         for(int h: nHuecos)
             for (int i = 0; i < intervalos.length; i++) 
                 if(h >= intervalos[i][0] && h <= intervalos[i][1]){
                     frecuencia[i]++;
+                    System.out.println(h);
                     break;
                 }
-            
+        //System.out.println(suma);
     }
     
     private int huecoMayor(){
@@ -104,9 +105,7 @@ public class GAP {
             }
         }
         return nHuecos[0];
-    }
-    
-    
+    }   
     
     private double singleRA(int oc, int n){
         return ((double) oc / n);
@@ -116,7 +115,7 @@ public class GAP {
         return ((double) 1 - Math.pow(0.9, n + 1));
     }
     
-    public void frecuenciaAcumulada(int[] muestra){
+    private void frecuenciaAcumulada(int[] muestra){
         fe = new double[intervalos.length];
         
         for (int i = 0; i < fe.length; i++) 
@@ -126,22 +125,21 @@ public class GAP {
                 fe[i] = round(singleRA(frecuencia[i], numeroHuecos(muestra.length)) + fe[i-1],3);
     }
     
-    public void frecuenciaAcumuladaR(){
+    private void frecuenciaAcumuladaR(){
         fo = new double[intervalos.length];
         
         for (int i = 0; i < intervalos.length; i++) 
             fo[i] = round(singleFAR(intervalos[i][1]),3);
     }
     
-    public void diferenciaFrecuencias(){
+    private void diferenciaFrecuencias(){
         diferencia = new double[fe.length];
         
         for (int i = 0; i < fe.length; i++) 
             diferencia[i] = round(Math.abs(fe[i] - fo[i]),3);
     }
     
-    public double diferenciaMAX(double[] fe, double[] fo){
-        
+    private double diferenciaMAX(double[] fe, double[] fo){      
         for (int i = 0; i < diferencia.length; i++) {
             for (int j = 0; j < diferencia.length; j++) {
                 if(diferencia[i] > diferencia[j]){
@@ -161,17 +159,15 @@ public class GAP {
         return dMax < dKol;
     }
 
-    public double resKolmogorov(int nHuecos){
+    private double resKolmogorov(int nHuecos){
         return ((double) 1.36 / Math.sqrt(nHuecos));
     }
 
-    public int longitudHuecos(int n) {
+    private int longitudHuecos(int n) {
         return (int) Math.round((double)n / 3);
     }
     
-    
-
-    public int[] ordenarMuestra(int[] m) {
+    private int[] ordenarMuestra(int[] m) {
         int[] muestra = new int[m.length];
         System.arraycopy(m, 0, muestra, 0, m.length);
         for (int i = 0; i < muestra.length; i++) 
@@ -185,7 +181,7 @@ public class GAP {
         return muestra;
     }
 
-    public int[] digitosUnicos(int[] muestra) {
+    private int[] digitosUnicos(int[] muestra) {
         int[] aux = ordenarMuestra(muestra);
         ArrayList<Integer> nu = new ArrayList();
 
@@ -198,7 +194,7 @@ public class GAP {
         return convertirArray(nu);
     }
 
-    public int[] convertirArray(ArrayList<Integer> al) {
+    private int[] convertirArray(ArrayList<Integer> al) {
         int[] k = new int[al.size()];
 
         for (int i = 0; i < k.length; i++) k[i] = al.get(i);
@@ -208,5 +204,17 @@ public class GAP {
     
     Double round(Double numero, Integer numeroDecimales) {
         return Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroDecimales);
+    }
+    
+    public void proceso(int[] muestra){
+        System.out.println("No. Huecos: " +numeroHuecos(muestra));
+        
+        ocurrencia(muestra, muestra.length);
+       
+        intervalosOcurrencia();
+        frecuencias();
+        frecuenciaAcumulada(muestra);
+        frecuenciaAcumuladaR();
+        diferenciaFrecuencias();
     }
 }
