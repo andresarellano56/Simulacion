@@ -104,7 +104,7 @@ public class GAP {
         return fo;
     }
     
-    public double[] diferenciaFrecuencias(int[] fe, int[] fo){
+    public double[] diferenciaFrecuencias(double[] fe, double[] fo){
         double[] dif = new double[fe.length];
         
         for (int i = 0; i < fe.length; i++) 
@@ -113,7 +113,7 @@ public class GAP {
         return dif;
     }
     
-    public double difenciaMAX(int[] fe, int[] fo){
+    public double difenciaMAX(double[] fe, double[] fo){
         double[] dif = diferenciaFrecuencias(fe, fo);
         
         for (int i = 0; i < dif.length; i++) {
