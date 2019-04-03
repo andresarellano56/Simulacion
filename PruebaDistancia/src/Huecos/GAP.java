@@ -88,7 +88,6 @@ public class GAP {
             for (int i = 0; i < intervalos.length; i++) 
                 if(h >= intervalos[i][0] && h <= intervalos[i][1]){
                     frecuencia[i]++;
-                    System.out.println(h);
                     break;
                 }
         //System.out.println(suma);
@@ -207,8 +206,6 @@ public class GAP {
     }
     
     public void proceso(int[] muestra){
-        System.out.println("No. Huecos: " +numeroHuecos(muestra));
-        
         ocurrencia(muestra, muestra.length);
        
         intervalosOcurrencia();
